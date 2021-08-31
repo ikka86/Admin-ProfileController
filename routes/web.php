@@ -13,13 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::group(['prefix' => 'admin'], function() {
     Route::get('news/create', 'Admin\NewsController@add');
+
+    Route::get('profile/create', 'Admin\ProfileController@add');
+    Route::get('profile/edit', 'Admin\ProfileController@edit');
 });
-Route::get('xxx', 'AAAController@bbb');
-Route::get('admin/profile/create', 'ProfileController@add');
-Route::get('admin/profile/edit', 'ProfileController@edit');
+// Route::get('xxx', 'AAAController@bbb');
 ?>
