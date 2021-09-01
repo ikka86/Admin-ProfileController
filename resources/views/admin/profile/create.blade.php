@@ -1,4 +1,4 @@
-@extends('layouts.profile.blade')
+@extends('layouts.profile')
 <!DOCTYPE html>
 <html>
     <head>
