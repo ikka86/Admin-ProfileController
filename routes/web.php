@@ -20,6 +20,12 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('profile/create', 'Admin\ProfileController@add');
     Route::get('profile/edit', 'Admin\ProfileController@edit');
-});
+    Route::get('news/create', 'Admin\NewsController@add')->middleware('auth');
+    Route::get('/home', 'HomeController@index')->name('home');});
 // Route::get('xxx', 'AAAController@bbb');
+//Auth::routes();
 ?>
+
+
+
+
