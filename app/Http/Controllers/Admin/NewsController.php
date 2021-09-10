@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+// 以下を追記することでNews Modelが扱えるようになる
 use App\News;
 
 
@@ -31,7 +32,9 @@ class NewsController extends Controller
           $news->image_path = null;
       }
 
+     // フォームから送信されてきた_tokenを削除する
       unset($form['_token']);
+     // フォームから送信されてきたimageを削除する
       unset($form['image']);
       // データベースに保存する
       $news->fill($form);
