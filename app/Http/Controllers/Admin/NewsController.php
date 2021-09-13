@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 // 以下を追記することでNews Modelが扱えるようになる
 use App\News;
 
@@ -20,7 +19,6 @@ class NewsController extends Controller
   {
       // Varidationを行う
       $this->validate($request, News::$rules);
-
       $news = new News;
       $form = $request->all();
 
@@ -72,12 +70,20 @@ class NewsController extends Controller
       $news = News::find($request->id);
       // 送信されてきたフォームデータを格納する
       $news_form = $request->all();
+      if (isset($news_form['image'])) {
+        $path = $request->file('image')->store('public/image');
+        $news->image_path = basename($path);
+        unset($news_form['image']);
+      } elseif (0 == strcmp($request->remove, 'true')) {
+        $news->image_path = null;
+      }
       unset($news_form['_token']);
+      unset($news_form['remove']);
 
       // 該当するデータを上書きして保存する
       $news->fill($news_form)->save();
 
-      return redirect('admin/news/');
+      return redirect('admin/news');
   }
 
   // 以下を追記　　
