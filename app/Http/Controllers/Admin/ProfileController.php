@@ -74,7 +74,8 @@ class ProfileController extends Controller
         // }
 
         unset($profile_form['_token']);
-        unset($profile_form['remove']);
+        //画像に関する記述なのでなし
+        //unset($profile_form['remove']);
 
         $history = new ProfileHistory;
         $history->profile_id = $profile->id;
