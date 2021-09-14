@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Profile;
-
+use Carbon\Carbon;
+use App\ProfileHistory;
 
 class ProfileController extends Controller
 {
@@ -64,21 +65,27 @@ class ProfileController extends Controller
         $profile = Profile::find($request->id);
         // 送信されてきたフォームデータを格納する
         $profile_form = $request->all();
-        if (isset($profile_form['image'])) {
-          $path = $request->file('image')->store('public/image');
-          $profile->image_path = basename($path);
-          unset($profile_form['image']);
-        } elseif (0 == strcmp($request->remove, 'true')) {
-          $profile->image_path = null;
-        }
+        // if (isset($profile_form['image'])) {
+        //   $path = $request->file('image')->store('public/image');
+        //   $profile->image_path = basename($path);
+        //   unset($profile_form['image']);
+        // } elseif (0 == strcmp($request->remove, 'true')) {
+        //   $profile->image_path = null;
+        // }
+
         unset($profile_form['_token']);
         unset($profile_form['remove']);
+
+        $history = new ProfileHistory;
+        $history->profile_id = $profile->id;
+        $history->edited_at = Carbon::now();
+        $history->save();
   
         // 該当するデータを上書きして保存する
         $profile->fill($profile_form);
         $profile->save();
   
-        return redirect('admin/profile/create');
+        return redirect('admin/profile/');
     }
   
     // 以下を追記　　
